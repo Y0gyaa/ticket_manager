@@ -8,10 +8,14 @@ from .models import RaiseTicketForm
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.db import models
   
   
 
 def index(request):
+    if request.method == 'POST':
+        Raise_ticket(request)
+        print("ok saverr start")
     return render(request, 'user/index.html', {'title':'Ticket Manager'})
 
 
@@ -70,11 +74,11 @@ def All_tickets_view(request):
 
 def Raise_ticket(request):
     if request.method == 'POST':
-        ticket = models.RaiseTicketForm.objects.create(
+        ticket = RaiseTicketForm.objects.create(
             subject = request.POST['subject'],
-            issue = request.POST['issue']
+            issue = request.POST['issue'],
+            user_id = request.user
         )
-        ticket.save()
         messages.success(request, f'Your valuable feedback was heard!')
         return redirect('status')
     else:
