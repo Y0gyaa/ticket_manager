@@ -1,0 +1,23 @@
+{% extends "user/index.html" %}
+{% load crispy_forms_tags %}
+{% block start %}
+<h3 style="margin-left: 5%;">All tickets raised</h3>
+<div style="border: 1px solid black; margin: 4%; padding:1%; border-radius:1%;">
+{% if context %}
+<div class="list-group">
+     {% for ticket in context %}
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ticket.subject}}</h5>
+        <small class="text-muted">{{ticket.date}}</small>
+      </div>
+      <p class="mb-1">{{ticket.issue}}</p> <br/><h6>Issue (O)pen/(C)losed: {{ticket.status}}</h6>
+    </a> 
+    {% endfor %}  
+  </div>
+  {% else %}
+  <h4>No tickets to show</h4>
+  {% endif %}
+  </div>
+
+  {% endblock start %}
